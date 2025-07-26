@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Link the "users" DB table to the AuthenticationManager
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService { // Cette class va lié "authenticationManager" a notre table Users dans la BDD
     @Autowired

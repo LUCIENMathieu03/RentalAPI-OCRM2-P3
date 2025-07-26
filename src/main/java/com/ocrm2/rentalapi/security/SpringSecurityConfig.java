@@ -24,11 +24,11 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    @Value("${jwt.secret}")
-    private String jwtKey;
-
     @Autowired
     CustomUserDetailsService customUserDetailsService;
+
+    @Value("${jwt.secret}")
+    private String jwtKey;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +36,9 @@ public class SpringSecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers( "/api/")
+                        auth.requestMatchers("/api/",
+                                        "/api/auth/register",
+                                        "/api/auth/login")
                                 .permitAll().anyRequest().authenticated())
                 .build();
     }
@@ -58,6 +60,9 @@ public class SpringSecurityConfig {
         return NimbusJwtDecoder.withSecretKey(secretKey).macAlgorithm(MacAlgorithm.HS256).build();
     }
 
+    /**
+     * Manage all the information of a user authentication
+     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
