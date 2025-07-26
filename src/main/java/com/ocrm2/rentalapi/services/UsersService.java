@@ -30,6 +30,12 @@ public class UsersService {
     @Autowired
     private JWTService jwtService;
 
+    public Users getUserById(final int id) {
+        System.out.println(usersRepository.findById(id));
+        return usersRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+    }
+
     /**
      * Save a user in DB if he doesn't exist alredy
      *
