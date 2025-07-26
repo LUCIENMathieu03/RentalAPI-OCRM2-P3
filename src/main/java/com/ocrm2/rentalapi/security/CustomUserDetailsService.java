@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Link the "users" DB table to the AuthenticationManager
@@ -24,7 +25,11 @@ public class CustomUserDetailsService implements UserDetailsService { // Cette c
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Users user = usersRepository.findByEmail(login);
+        Optional<Users> userOpt = usersRepository.findByEmail(login);
+        if (userOpt.isEmpty()) {
+            throw new UsernameNotFoundException("Utilisateur non trouvé");
+        }
+        Users user = userOpt.get();
 
         return new User(user.getEmail(), user.getPassword(), getGrantedAuthorities("USER"));
     }
