@@ -1,5 +1,6 @@
 package com.ocrm2.rentalapi.controllers;
 
+import com.ocrm2.rentalapi.dto.LoginRequestDTO;
 import com.ocrm2.rentalapi.dto.RegisterRequestDTO;
 import com.ocrm2.rentalapi.dto.TokenResponseDTO;
 import com.ocrm2.rentalapi.services.UsersService;
@@ -24,6 +25,18 @@ public class AuthController {
         try{
             usersService.registerUser(registerRequestDTO);
             TokenResponseDTO token = usersService.authenticateUser(registerRequestDTO.getEmail(), registerRequestDTO.getPassword());
+
+            return ResponseEntity.ok(token);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO){
+        try{
+            TokenResponseDTO token = usersService.authenticateUser(loginRequestDTO.getLogin(), loginRequestDTO.getPassword()); //si bug dans la verifier si c'est getEmail()
 
             return ResponseEntity.ok(token);
 
