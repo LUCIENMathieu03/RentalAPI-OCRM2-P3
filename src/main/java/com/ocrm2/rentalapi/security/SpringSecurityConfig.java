@@ -39,7 +39,8 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/",
                                         "/api/auth/register",
-                                        "/api/auth/login")
+                                        "/api/auth/login",
+                                        "/api/images/*")
                                 .permitAll().anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .build();
