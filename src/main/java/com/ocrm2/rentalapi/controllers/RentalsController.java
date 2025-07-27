@@ -45,25 +45,40 @@ public class RentalsController {
 
     @PostMapping("/rentals")
     public ResponseEntity<?> addRental(@ModelAttribute RentalsFormDTO rentalsFormDTO) throws IOException {
-        rentalsService.registerRental(rentalsFormDTO);
+        try {
+            rentalsService.registerRental(rentalsFormDTO);
+            RequestResponseDTO response = new RequestResponseDTO("Rental created !");
 
-        RequestResponseDTO response = new RequestResponseDTO("Rental created !");
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e){
+            return ResponseEntity.status(401).body("error");
+        }
     }
 
     @PutMapping ("/rentals/{id}")
     public ResponseEntity<?> updateRental(@ModelAttribute RentalsFormDTO rentalsFormDTO, @PathVariable("id") final int id) {
-        rentalsService.updateRental(id, rentalsFormDTO);
+        try{
+            rentalsService.updateRental(id, rentalsFormDTO);
+            RequestResponseDTO response = new RequestResponseDTO("Rental updated !");
 
-        RequestResponseDTO response = new RequestResponseDTO("Rental updated !");
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        }catch (RuntimeException e){
+            return ResponseEntity.status(401).body("error");
+        }
+
     }
 
     @GetMapping("/rentals/{id}")
     public ResponseEntity<?> getRental(@PathVariable("id") final int id) {
-        Rentals rental = rentalsService.getRentalById(id);
-        RentalsDTO response = rentalsService.toDTO(rental);
-        return ResponseEntity.ok(response);
+        try{
+            Rentals rental = rentalsService.getRentalById(id);
+            RentalsDTO response = rentalsService.toDTO(rental);
+
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body("error");
+        }
+
     }
 
 
