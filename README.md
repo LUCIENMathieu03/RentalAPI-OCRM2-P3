@@ -2,6 +2,8 @@
 
 API de gestion de Rental développée en Java et Spring Boot.
 
+Lien application frontend : https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring.git
+
 ## Pré-requis
 
 - **Java 17** (version recommandée : 17.x)
