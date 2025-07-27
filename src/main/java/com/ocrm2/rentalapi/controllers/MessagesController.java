@@ -16,7 +16,7 @@ public class MessagesController {
     @Autowired
     MessagesService messagesService;
 
-    @PostMapping("/messages/")
+    @PostMapping("/messages")
     public ResponseEntity<?> postMessage(@RequestBody MessagesDTO messagesDTO){
         try{
             messagesService.saveMessage(messagesDTO);
