@@ -37,7 +37,7 @@ public class AuthController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
-            TokenResponseDTO token = usersService.authenticateUser(loginRequestDTO.getLogin(), loginRequestDTO.getPassword()); //si bug dans la verifier si c'est getEmail()
+            TokenResponseDTO token = usersService.authenticateUser(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()); //si bug dans la verifier si c'est getEmail()
 
             return ResponseEntity.ok(token);
         } catch (Exception e) {
