@@ -1,5 +1,6 @@
 package com.ocrm2.rentalapi.controllers;
 
+import com.ocrm2.rentalapi.dto.RentalsDTO;
 import com.ocrm2.rentalapi.dto.RentalsFormDTO;
 import com.ocrm2.rentalapi.dto.RentalsListDTO;
 import com.ocrm2.rentalapi.dto.RequestResponseDTO;
@@ -47,6 +48,21 @@ public class RentalsController {
         rentalsService.registerRental(rentalsFormDTO);
 
         RequestResponseDTO response = new RequestResponseDTO("Rental created !");
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping ("/rentals/{id}")
+    public ResponseEntity<?> updateRental(@ModelAttribute RentalsFormDTO rentalsFormDTO, @PathVariable("id") final int id) {
+        rentalsService.updateRental(id, rentalsFormDTO);
+
+        RequestResponseDTO response = new RequestResponseDTO("Rental updated !");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/rentals/{id}")
+    public ResponseEntity<?> getRental(@PathVariable("id") final int id) {
+        Rentals rental = rentalsService.getRentalById(id);
+        RentalsDTO response = rentalsService.toDTO(rental);
         return ResponseEntity.ok(response);
     }
 

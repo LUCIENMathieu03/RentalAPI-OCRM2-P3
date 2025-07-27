@@ -35,6 +35,10 @@ public class RentalsService {
         return rentalsRepository.findAll();
     }
 
+    public Rentals getRentalById(final int id){
+        return rentalsRepository.findById(id).orElseThrow(()-> new RuntimeException("rental introuvable") );
+    }
+
     public void registerRental(RentalsFormDTO rentalsFormDTO) throws IOException {
         String fileName = saveImgOnSever(rentalsFormDTO.getPicture());
 
@@ -56,6 +60,25 @@ public class RentalsService {
         rental.setPicture(fileName);
 
         return rental;
+    }
+    public void updateRental(int id, RentalsFormDTO rentalsFormDTO) {
+        Rentals rental = rentalsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rental introuvable"));
+
+
+        // Vérifie que l'utilisateur est bien le propriétaire
+        Users user = usersService.getCurrentUserFromSecurityContext();
+        if (user.getId() != rental.getOwnerId()) {
+            throw new RuntimeException("Non autorisé à modifier ce rental");
+        }
+
+        //Maj du rental
+        rental.setName(rentalsFormDTO.getName());
+        rental.setSurface(rentalsFormDTO.getSurface());
+        rental.setPrice(rentalsFormDTO.getPrice());
+        rental.setDescription(rentalsFormDTO.getDescription());
+
+        rentalsRepository.save(rental);
     }
 
     public RentalsDTO toDTO(Rentals rental) {
