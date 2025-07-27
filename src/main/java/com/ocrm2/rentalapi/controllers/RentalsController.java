@@ -6,6 +6,9 @@ import com.ocrm2.rentalapi.dto.RentalsListDTO;
 import com.ocrm2.rentalapi.dto.RequestResponseDTO;
 import com.ocrm2.rentalapi.models.Rentals;
 import com.ocrm2.rentalapi.services.RentalsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -21,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+@Tag(name = "Rentals", description = "Gestion des \"Rentals\"")
 @RestController
 @RequestMapping("/api")
 public class RentalsController {
@@ -31,6 +35,11 @@ public class RentalsController {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @Operation(
+            summary = "Rentals",
+            description = "Retourne la liste de tout les \"Rentals\" "
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/rentals")
     public ResponseEntity<?> getAllRentals(){
         try{
@@ -43,6 +52,11 @@ public class RentalsController {
         }
     }
 
+    @Operation(
+            summary = "Création de rental",
+            description = "Permet a un utilisateur de crée un \"rental\" depuis un formulaire en front"
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/rentals")
     public ResponseEntity<?> addRental(@ModelAttribute RentalsFormDTO rentalsFormDTO) throws IOException {
         try {
@@ -55,6 +69,11 @@ public class RentalsController {
         }
     }
 
+    @Operation(
+            summary = "Modification d'un rental",
+            description = "Permet au createur d'un rental de le modifié"
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping ("/rentals/{id}")
     public ResponseEntity<?> updateRental(@ModelAttribute RentalsFormDTO rentalsFormDTO, @PathVariable("id") final int id) {
         try{
@@ -68,6 +87,11 @@ public class RentalsController {
 
     }
 
+    @Operation(
+            summary = "Récupéré un rental",
+            description = "Retourne un rental selon un ID donné"
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/rentals/{id}")
     public ResponseEntity<?> getRental(@PathVariable("id") final int id) {
         try{
@@ -81,7 +105,10 @@ public class RentalsController {
 
     }
 
-
+    @Operation(
+            summary = "Image",
+            description = "Retourne une image stocker dans l'api en fonction de son nom"
+    )
     @GetMapping("/images/{filename:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {

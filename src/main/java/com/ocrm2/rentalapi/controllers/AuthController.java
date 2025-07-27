@@ -6,10 +6,14 @@ import com.ocrm2.rentalapi.dto.RequestResponseDTO;
 import com.ocrm2.rentalapi.dto.TokenResponseDTO;
 import com.ocrm2.rentalapi.models.Users;
 import com.ocrm2.rentalapi.services.UsersService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Authentification", description = "Gestion de l'autentification")
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -22,6 +26,10 @@ public class AuthController {
         return "Bienvenue sur l’API Rentals 👋";
     }
 
+    @Operation(
+            summary = "Creation de compte",
+            description = "Permet a un utilisateur de crée un compte"
+    )
     @PostMapping("/auth/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         try {
@@ -34,6 +42,10 @@ public class AuthController {
         }
     }
 
+    @Operation(
+            summary = "Connexion",
+            description = "Permet a un utilisateur de se connecter a son compte"
+    )
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
@@ -46,7 +58,11 @@ public class AuthController {
         }
     }
 
-
+    @Operation(
+            summary = "Inforamtion d'un compte",
+            description = "Retourne les information du compte actuelement connecté"
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/auth/me")
     public ResponseEntity<?> me() {
         try {

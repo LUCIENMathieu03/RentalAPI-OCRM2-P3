@@ -40,7 +40,11 @@ public class SpringSecurityConfig {
                         auth.requestMatchers("/api/",
                                         "/api/auth/register",
                                         "/api/auth/login",
-                                        "/api/images/*")
+                                        "/api/images/*",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/index.html")
                                 .permitAll().anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .build();
