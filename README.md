@@ -106,12 +106,12 @@ mvn spring-boot:run
 ```
 
 4. L’API sera disponible à :  
-   [http://localhost:3001](http://localhost:3001)
+   [http://localhost:3001](http://localhost:3001) (si tu utilise le port 3001)
 
 ## 5. Documentation de l’API
 
 La documentation interactive Swagger UI est accessible ici quand l'api est lancé:  
-[http://localhost:3001/swagger-ui.html](http://localhost:3001/swagger-ui.html)
+[http://localhost:3001/swagger-ui.html](http://localhost:3001/swagger-ui.html) (si tu utilise le port 3001)
 
 ## 6. Notes supplémentaires
 
