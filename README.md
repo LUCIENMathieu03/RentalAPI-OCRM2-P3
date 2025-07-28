@@ -8,7 +8,7 @@ Lien application frontend : https://github.com/OpenClassrooms-Student-Center/Dev
 
 - **Java 17** (version recommandée : 17.x)
 - **Maven 3.8+**
-- **MySQL** (version 8.x + conseillée) installé et fonctionnel sur ta machine
+- **MySQL** (version 8.x conseillée) installé et fonctionnel sur ta machine
 - **Git**
 
 ## 1. Cloner le projet depuis GitHub
@@ -65,13 +65,20 @@ Crée un fichier nommé `.env` à la racine du projet avec le contenu suivant :
 ```
 DB_USERNAME=ton_nom_utilisateur_bdd
 DB_PASSWORD=ton_mot_de_passe_bdd
+DB_URL=jdbc:mysql://localhost:xxxx/nom_de_la_base_de_donnees
 JWT_SECRET=une_chaine_de_caracteres_secrete_longue
+SERVER_PORT=3001
 BASE_URL=http://localhost:3001
 ```
 
-- **DB_USERNAME** et **DB_PASSWORD** : tes identifiants pour la connexion à ta base de données.
-- **JWT_SECRET** : une clé secrète utilisée pour signer les tokens JWT.
-- **BASE_URL** : URL de base de l’API (ici `http://localhost:3001` pour un environnement local).
+| Variable       | Description                                                                                               |
+|----------------|----------------------------------------------------------------------------------------------------------|
+| `DB_USERNAME`  | Identifiant de connexion à la base de données MySQL.                                                     |
+| `DB_PASSWORD`  | Mot de passe de connexion à la base de données MySQL.                                                    |
+| `DB_URL`       | URL de connexion JDBC vers la base de données MySQL.<br>Exemple : `jdbc:mysql://localhost:3306/rentalocrm2` |
+| `JWT_SECRET`   | Clé secrète utilisée pour signer et vérifier les tokens JWT (garde-la confidentielle !).                 |
+| `SERVER_PORT`  | Port sur lequel le serveur backend écoute (ex. : `3001` pour accès à `http://localhost:3001`).           |
+| `BASE_URL`     | URL de base de l’API (doit correspondre au port configuré dans `SERVER_PORT`).                           |
 
 **Important** : Ne commit jamais ce fichier `.env` dans le dépôt Git, car il contient des informations sensibles.
 
